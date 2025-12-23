@@ -1,14 +1,66 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:my_sip/common/style/padding.dart';
 import 'package:my_sip/common/widget/button/elevated_button.dart';
-import 'package:my_sip/features/authentication/screen/onboarding/onboarding.dart';
+import 'package:my_sip/features/authentication/screen/onboarding/onboarding_page.dart';
 import 'package:my_sip/features/authentication/screen/onboarding/widget/imp_container.dart';
 import 'package:my_sip/utils/constant/colors.dart';
+import 'package:my_sip/utils/constant/text_style.dart';
 
 class WelcomePageScreen extends StatelessWidget {
-  WelcomePageScreen({super.key});
+  const WelcomePageScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // final w = MediaQuery.of(context).size.width;
+    // final h = MediaQuery.of(context).size.height;
+    return Scaffold(
+      appBar: AppBar(),
+      body: SafeArea(
+        child: Padding(
+          padding: UPadding.screenPadding,
+          child: Column(
+            children: [
+              //Top portion
+              ImpContainer(),
+
+              //welcome page content
+              TitleContent1(),
+
+              //Let’s Get Started Button
+              BottomPortion(),
+
+              SizedBox(height: kBottomNavigationBarHeight),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class BottomPortion extends StatelessWidget {
+  const BottomPortion({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return UElevatedBUtton(
+      onPressed: () => Get.to(() => OnboardingPage()),
+      // onPressed: () => Get.to(() => OnboardingScreen()),
+      child: Row(
+        children: [
+          Text('Let’s Get Started', style: TextStyle(color: Ucolors.light)),
+          // Icon(Icons.arrow_forward_outlined, color: Ucl,),
+        ],
+      ),
+    );
+  }
+}
+
+class TitleContent1 extends StatelessWidget {
+  TitleContent1({super.key});
 
   final List<String> text = [
     'Smart Goal Tracking',
@@ -20,70 +72,33 @@ class WelcomePageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: UPadding.screenPadding,
-        child: ListView(
-          children: [
-            //Imp container with titlw
-            ImpContainer(),
-
-            SizedBox(height: 127.h),
-
-            Center(
-              child: SizedBox(
-                width: 0.66.sw,
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => SizedBox(height: 16.h),
-                  shrinkWrap: true,
-                  // physics: NeverScrollableScrollPhysics(),
-                  itemCount: text.length,
-                  itemBuilder: (context, index) => Center(
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      // mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // SizedBox(width: 8.w),
-                        Icon(
-                          Icons.check_circle_rounded,
-                          color: Ucolors.success,
-                          size: 20.sp,
-                        ),
-                        SizedBox(width: 8.w),
-
-                        Text(
-                          // textAlign: TextAlign.center,
-                          text[index],
-                          style: TextStyle(
-                            color: Ucolors.dark,
-                            fontSize: 16.sp,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+    final w = MediaQuery.of(context).size.width;
+    final s = MediaQuery.of(context).size;
+    log('${Get.width} ${Get.height}');
+    log('${s.width} ${s.height}');
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(
+          5,
+          (index) => Padding(
+            padding: EdgeInsets.symmetric(vertical: w * 0.01),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: w * 0.1),
+                Icon(Icons.check_circle, color: Ucolors.success, size: 20),
+                SizedBox(width: w * 0.03),
+                Text(
+                  text[index],
+                  style: UTextStyles.subtitle1.copyWith(color: Ucolors.dark),
                 ),
-              ),
+                Spacer(),
+              ],
             ),
-            SizedBox(height: 127.h),
-          ],
-        ),
-      ),
-
-      floatingActionButton: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: UElevatedBUtton(
-          onPressed: () => Get.to(() => OnboardingScreen()),
-          child: Row(
-            children: [
-              Text('Let’s Get Started', style: TextStyle(color: Ucolors.light)),
-              // Icon(Icons.arrow_forward_outlined, color: Ucl,),
-            ],
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

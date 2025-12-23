@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:my_sip/features/authentication/screen/login/signIn.dart';
+import 'package:my_sip/features/authentication/screen/login/login_page.dart';
 
 class OnboardingController extends GetxController {
   static OnboardingController get instance => Get.find();
@@ -18,7 +18,7 @@ class OnboardingController extends GetxController {
   //next page
   void nextPage() {
     if (currentIndex.value == 3) {
-      Get.offAll(() => SigninScreen());
+      Get.to(() => LoginPage());
       return;
     }
     currentIndex++;

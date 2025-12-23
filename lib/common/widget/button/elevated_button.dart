@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:my_sip/utils/constant/colors.dart';
 
 class UElevatedBUtton extends StatelessWidget {
   const UElevatedBUtton({
@@ -7,45 +7,54 @@ class UElevatedBUtton extends StatelessWidget {
     required this.onPressed,
     this.icon,
     this.text,
-    this.child,
+    required this.child,
     this.height,
     this.width,
+    this.outlined = false,
   });
 
   final VoidCallback onPressed;
   final IconData? icon;
   final String? text;
-  final Widget? child;
+  final Widget child;
   final double? height, width;
+  final bool outlined;
 
   @override
   Widget build(BuildContext context) {
+    final heightt = MediaQuery.of(context).size.height;
+    // final widthh = MediaQuery.of(context).size.width;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+      
         padding: EdgeInsets.zero,
 
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusGeometry.circular(14.r),
+          borderRadius: BorderRadiusGeometry.circular(14),
         ),
       ),
       onPressed: onPressed,
       child: Ink(
         // width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.r),
-          gradient: LinearGradient(
-            // begin: ,
-            colors: [Color(0xff07315C), Color(0xff0280C0)],
-          ),
-        ),
+        decoration: outlined
+            ? BoxDecoration(
+                color: Ucolors.light,
+                border: Border.all(color: Color(0xffE7E7E7)),
+                borderRadius: BorderRadius.circular(14),
+                
+              )
+            : BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+
+                gradient: Ucolors.backgroundGradient,
+              ),
         child: SizedBox(
-          height: height ?? 60.h,
-          // width: width ?? 398.w,
+          height: height ?? heightt * 0.065,
           width: double.infinity,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              child!,
+              child,
               //     Text(
               //       textAlign: TextAlign.center,
               //       text!,

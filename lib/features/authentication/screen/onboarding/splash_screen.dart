@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:my_sip/features/authentication/screen/onboarding/welcome_page.dart';
 import 'package:my_sip/utils/constant/colors.dart';
@@ -36,14 +35,14 @@ class _SplashScreenState extends State<SplashScreen> {
           Align(
             alignment: Alignment.topRight,
             child: Transform.translate(
-              offset: Offset(10.w, -10.h),
+              offset: Offset(10, -10),
               child: Image.asset(UImages.topright),
             ),
           ),
           Align(
             alignment: Alignment.bottomLeft,
             child: Transform.translate(
-              offset: Offset(-10.w, 10.h),
+              offset: Offset(-10, 10),
               child: Image.asset(UImages.buttomleft),
             ),
           ),
@@ -51,10 +50,8 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Center(
-                child: Image.asset(UImages.imp, width: 157.w, height: 133.h),
-              ),
-              SizedBox(height: 10.h),
+              Center(child: Image.asset(UImages.imp, width: 157, height: 133)),
+              SizedBox(height: 10),
               RichText(
                 text: TextSpan(
                   children: [
@@ -63,21 +60,21 @@ class _SplashScreenState extends State<SplashScreen> {
                       style: TextStyle(
                         color: Ucolors.blue,
                         fontWeight: FontWeight.bold,
-                        fontSize: 18.sp,
+                        fontSize: 18,
                       ),
                     ),
                     TextSpan(
                       text: 'Riddit Finworld',
-                      style: TextStyle(color: Ucolors.primary, fontSize: 18.sp),
+                      style: TextStyle(color: Ucolors.primary, fontSize: 18),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 20),
 
               LoadingAnimationWidget.hexagonDots(
                 color: Ucolors.primary,
-                size: 50.sp,
+                size: 50,
               ),
             ],
           ),

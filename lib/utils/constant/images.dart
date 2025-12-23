@@ -4,9 +4,13 @@ class UImages {
   //Imf logo
   static const String imp = 'assets/logo/imf.png';
 
-  //Splash Screen
+  // top bottom corner design
   static const String topright = 'assets/logo/topRight.png';
   static const String buttomleft = 'assets/logo/bottomLeft.png';
+  static const String topRight1 = 'assets/logo/Vector 27.png';
+  static const String topRight2 = 'assets/logo/Vector 28.png';
+  static const String topRight3 = 'assets/logo/Vector 29.png';
+  static const String topRight4 = 'assets/logo/Ellipse 265.png';
 
   //Onboarding
   static const String onboarding1 = 'assets/images/onboarding/Illustration.png';
@@ -21,4 +25,5 @@ class UImages {
   static const String signIn = 'assets/logo/login_vector.png';
   static const String google = 'assets/icon/google.png';
   static const String apple = 'assets/icon/ios.png';
+  static const String message = 'assets/icon/msg.png';
 }

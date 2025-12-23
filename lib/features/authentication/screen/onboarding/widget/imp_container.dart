@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_sip/utils/constant/colors.dart';
 import 'package:my_sip/utils/constant/images.dart';
 
@@ -8,16 +7,17 @@ class ImpContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 262.h,
-      // width: 398.w,
-      width: double.infinity,
-      constraints: BoxConstraints(minHeight: 200.h),
-      padding: EdgeInsets.symmetric(vertical: 20.h),
+    // final w = MediaQuery.of(context).size.width;
+    final h = MediaQuery.of(context).size.height;
 
-      // padding: EdgeInsets.symmetric(vertical: 24.h),
+    return Container(
+      height: h * 0.3,
+      width: double.infinity,
+      constraints: BoxConstraints(minHeight: 200),
+      padding: EdgeInsets.symmetric(vertical: 20),
+
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(
           begin: Alignment.centerRight,
           end: Alignment.centerLeft,
@@ -31,15 +31,11 @@ class ImpContainer extends StatelessWidget {
         // fit: BoxFit.scaleDown,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: 57.h),
-            Image.asset(
-              UImages.imp,
-              height: 90.h,
-              width: 106.w,
-              // fit: BoxFit.cover,
-            ),
+            SizedBox(height: h * 0.055),
+            Image.asset(UImages.imp),
             Text(
               textAlign: TextAlign.center,
               'Your Smart Personal Finance AI',
@@ -58,7 +54,7 @@ class ImpContainer extends StatelessWidget {
                 fontSize: 18,
               ),
             ),
-            SizedBox(height: 57.h),
+            SizedBox(height: h * 0.055),
           ],
         ),
       ),

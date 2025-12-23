@@ -9,4 +9,12 @@ class Ucolors {
   static const Color success = Color(0xff1EC756);
   static const Color light = Color(0xffFFFFFF);
   static const Color darkgrey = Color(0xff787878);
+  static const Color textFormEnabled = Color(0xff0280C0);
+  static const Color borderColor = Color(0xffDFDFDF);
+
+  static const LinearGradient backgroundGradient = LinearGradient(
+    begin: Alignment.centerRight,
+    end: Alignment.centerLeft,
+    colors: [Color(0xff0280C0), Color(0xff07315C)],
+  );
 }
