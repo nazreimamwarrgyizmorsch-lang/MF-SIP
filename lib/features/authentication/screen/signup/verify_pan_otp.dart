@@ -29,74 +29,138 @@ class VerifyPanOtp extends StatelessWidget {
         child: SafeArea(
           child: Padding(
             padding: UPadding.screenPadding,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: USizes.spcaeFromTop),
+            child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: USizes.spcaeFromTop),
 
-                  ///Message logo
-                  Center(child: Image.asset(UImages.message)),
+                ///Message logo
+                Center(child: Image.asset(UImages.message)),
 
-                  SizedBox(height: h * 0.015),
+                const SizedBox(height: 15),
 
-                  //Heading
-                  HeadingText(title: 'Verify Your PAN Number'),
+                //Heading
+                const HeadingText(title: 'Verify Your PAN Number'),
+                const SizedBox(height: 10),
 
-                  SizedBox(height: h * 0.015),
+                //Subtitle
+                const SubtitleText(
+                  subtitle:
+                      'To verify your account, enter the 6 digit OTP code that we sent to your email.',
+                ),
 
-                  //Subtitle
-                  SubtitleText(
-                    subtitle:
-                        'To verify your account, enter the 6 digit OTP code that we sent to your email.',
-                  ),
+                const SizedBox(height: 25),
 
-                  SizedBox(height: h * 0.055),
+                SimpleOtpField(length: 6),
+                const SizedBox(height: 15),
 
-                  SimpleOtpField(length: 6),
-                  SizedBox(height: h * 0.020),
+                //Timer
+                Text(
+                  '00:59',
+                  style: UTextStyles.heading2.copyWith(color: Ucolors.blue),
+                ),
 
-                  //Timer
-                  Text(
-                    '00:59',
-                    style: UTextStyles.heading2.copyWith(color: Ucolors.blue),
-                  ),
+                const SizedBox(height: 10),
 
-                  SizedBox(height: h * 0.020),
+                //small heading
+                const SmallHeading(smallheading: 'Didnt get the email?'),
 
-                  //small heading
-                  SmallHeading(smallheading: 'Didnt get the email?'),
+                const SizedBox(height: 15),
 
-                  // Spacer(flex: ,),
-                  SizedBox(height: Get.height * 0.0195),
-                  UElevatedBUtton(
-                    height: Get.height * 0.060,
-                    outlined: true,
-                    onPressed: () {},
-                    child: Center(
-                      child: Text(
-                        'Resend Code',
-                        style: UTextStyles.buttonText.copyWith(
-                          color: Ucolors.dark,
-                          fontSize: 14,
-                        ),
+                UElevatedBUtton(
+                  height: Get.height * 0.060,
+                  outlined: true,
+                  onPressed: () {},
+                  child: Center(
+                    child: Text(
+                      'Resend Code',
+                      style: UTextStyles.buttonText.copyWith(
+                        color: Ucolors.dark,
+                        fontSize: 14,
                       ),
                     ),
                   ),
-                  SizedBox(height: Get.height * 0.2),
-                  // Spacer(),
+                ),
+                // SizedBox(height: Get.height * 0.2),
+                Spacer(),
 
-                  //Verify button and back button
-                  PrimaryBackBottomBar(
-                    primaryText: 'Verify',
-                    onPrimaryPressed: () =>
-                        Get.to(() => CreateSuccessAccountScreen()),
-                    backText: 'Back',
-                    onBackPressed: () => Get.back(),
-                  ),
-                ],
-              ),
+                // Verify button and back button
+                PrimaryBackBottomBar(
+                  // bottomPadding: kBottomNavigationBarHeight / 2,
+                  primaryText: 'Verify',
+                  onPrimaryPressed: () =>
+                      Get.to(() => CreateSuccessAccountScreen()),
+                  backText: 'Back',
+                  onBackPressed: () => Get.back(),
+                ),
+              ],
             ),
+            // Column(
+            //   crossAxisAlignment: CrossAxisAlignment.center,
+            //   children: [
+            //     SizedBox(height: USizes.spcaeFromTop),
+
+            //     ///Message logo
+            //     Center(child: Image.asset(UImages.message)),
+
+            //     SizedBox(height: h * 0.015),
+
+            //     //Heading
+            //     HeadingText(title: 'Verify Your PAN Number'),
+
+            //     SizedBox(height: h * 0.015),
+
+            //     //Subtitle
+            //     SubtitleText(
+            //       subtitle:
+            //           'To verify your account, enter the 6 digit OTP code that we sent to your email.',
+            //     ),
+
+            //     SizedBox(height: h * 0.055),
+
+            //     SimpleOtpField(length: 6),
+            //     SizedBox(height: h * 0.020),
+
+            //     //Timer
+            //     Text(
+            //       '00:59',
+            //       style: UTextStyles.heading2.copyWith(color: Ucolors.blue),
+            //     ),
+
+            //     SizedBox(height: h * 0.020),
+
+            //     //small heading
+            //     SmallHeading(smallheading: 'Didnt get the email?'),
+
+            //     // Spacer(flex: ,),
+            //     SizedBox(height: Get.height * 0.0195),
+            //     UElevatedBUtton(
+            //       height: Get.height * 0.060,
+            //       outlined: true,
+            //       onPressed: () {},
+            //       child: Center(
+            //         child: Text(
+            //           'Resend Code',
+            //           style: UTextStyles.buttonText.copyWith(
+            //             color: Ucolors.dark,
+            //             fontSize: 14,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     SizedBox(height: Get.height * 0.2),
+            //     // Spacer(),
+
+            //     //Verify button and back button
+            //     PrimaryBackBottomBar(
+            //       primaryText: 'Verify',
+            //       onPrimaryPressed: () =>
+            //           Get.to(() => CreateSuccessAccountScreen()),
+            //       backText: 'Back',
+            //       onBackPressed: () => Get.back(),
+            //     ),
+            //   ],
+            // ),
           ),
         ),
       ),

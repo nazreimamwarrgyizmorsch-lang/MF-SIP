@@ -11,6 +11,7 @@ import 'package:my_sip/features/dashboard/screen/widget/comparison_chart.dart';
 import 'package:my_sip/features/dashboard/screen/widget/invest_fund_list.dart';
 import 'package:my_sip/features/dashboard/screen/widget/portfolio_summary.dart';
 import 'package:my_sip/features/dashboard/screen/widget/suggest_fund_list.dart';
+import 'package:my_sip/features/mf/screen/explore/explore.dart';
 import 'package:my_sip/navigation_menu_bar.dart';
 import 'package:my_sip/utils/constant/colors.dart';
 import 'package:my_sip/utils/constant/images.dart';
@@ -33,12 +34,12 @@ class ComparisonScreen extends StatelessWidget {
           Get.to(() => NavigationMenuBar());
         },
         action: [
-          CompactIcon(
-            icon: Icons.search,
-            onPressed: () {
-              log('iconPressed');
-            },
-          ),
+          // CompactIcon(
+          //   icon: Icons.search,
+          //   onPressed: () {
+          //     log('iconPressed');
+          //   },
+          // ),
           CompactIcon(
             icon: Iconsax.notification,
             onPressed: () {
@@ -136,6 +137,9 @@ class ComparisonScreen extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         top: false,
         child: BottomBarButton(
+          firstButtonP: () => Get.to(() => NavigationMenuBar()),
+          secondButtonP: () {},
+
           firstButton: 'Explore',
           secondButton: 'View Cart',
         ),
@@ -149,10 +153,14 @@ class BottomBarButton extends StatelessWidget {
     super.key,
     required this.firstButton,
     required this.secondButton,
+    this.firstButtonP,
+    this.secondButtonP,
   });
 
   final String firstButton;
   final String secondButton;
+  final VoidCallback? firstButtonP;
+  final VoidCallback? secondButtonP;
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +178,7 @@ class BottomBarButton extends StatelessWidget {
         children: [
           Expanded(
             child: UElevatedBUtton(
-              onPressed: () => Get.back(),
+              onPressed: firstButtonP,
               height: 52,
               outlined: true,
               child: Row(
@@ -185,6 +193,8 @@ class BottomBarButton extends StatelessWidget {
 
           Expanded(
             child: UElevatedBUtton(
+              onPressed: secondButtonP,
+
               height: 52,
 
               child: Row(

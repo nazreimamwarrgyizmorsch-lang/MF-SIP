@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_sip/common/widget/appbar/custom_appbar_normal.dart';
 import 'package:my_sip/common/widget/appbar/widget/compact_icon.dart';
+import 'package:my_sip/common/widget/button/elevated_button.dart';
+import 'package:my_sip/common/widget/text/heading_section.dart';
 import 'package:my_sip/common/widget/text/view_all.dart';
+import 'package:my_sip/features/dashboard/screen/comparison_screen.dart';
+import 'package:my_sip/features/mf/screen/dashboard/dashboard.dart';
 import 'package:my_sip/utils/constant/colors.dart';
 import 'package:my_sip/utils/constant/images.dart';
 import 'package:my_sip/utils/constant/text_style.dart';
@@ -118,11 +122,9 @@ class _FundDeatailsScreenState extends State<FundDeatailsScreen>
             SliverToBoxAdapter(child: SizedBox(height: 10)),
 
             SliverPersistentHeader(
-
               pinned: true,
               // floating: false,
               delegate: SliverPageTabs(
-
                 selectedIndex: _tabController.index,
                 onTap: (index) {
                   _tabController.animateTo(index);
@@ -141,6 +143,13 @@ class _FundDeatailsScreenState extends State<FundDeatailsScreen>
             Center(child: Text('Portfolio Page')),
             Center(child: Text('Info Page')),
           ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: BottomBarButton(
+          firstButton: 'Lumpsum',
+          secondButton: 'Start SIP',
         ),
       ),
     );
@@ -254,7 +263,31 @@ class OverviewScreen extends StatelessWidget {
             ],
           ),
         ),
-
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 60.0, vertical: 15),
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(color: Ucolors.primary.withOpacity(0.5)),
+            ),
+            onPressed: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'View full Risk Analysis',
+                  style: UTextStyles.buttonText.copyWith(
+                    color: Ucolors.primary.withOpacity(0.5),
+                  ),
+                ),
+                SizedBox(width: 10),
+                Icon(
+                  Icons.arrow_forward,
+                  color: Ucolors.primary.withOpacity(0.5),
+                ),
+              ],
+            ),
+          ),
+        ),
         // --- Fund Comparison Section ---
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 20, 16, 10),
@@ -263,7 +296,84 @@ class OverviewScreen extends StatelessWidget {
             showActionButton: false,
           ),
         ),
-        // Add your Comparison widgets here
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.24,
+          child: ListView.builder(
+            itemCount: 10,
+            scrollDirection: Axis.horizontal,
+
+            itemBuilder: (context, index) => SizedBox(
+              width: MediaQuery.of(context).size.width * 0.97,
+              child: CustomContainer(
+                topPadding: 15,
+                child: Column(
+                  children: [
+                    FundComparisonItem(),
+                    SizedBox(height: 5),
+                    Row(
+                      children: [
+                        // Left dashed line
+                        Expanded(
+                          child: DashedLine(color: Colors.blue.shade200),
+                        ),
+
+                        // VS circlef
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.blue, width: 1.5),
+                          ),
+                          child: const Text(
+                            'VS',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+
+                        // Right dashed line
+                        Expanded(
+                          child: DashedLine(color: Colors.blue.shade200),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5),
+
+                    FundComparisonItem(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 60.0, vertical: 15),
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(color: Ucolors.primary.withOpacity(0.5)),
+            ),
+            onPressed: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Compare Funds',
+                  style: UTextStyles.buttonText.copyWith(
+                    color: Ucolors.primary.withOpacity(0.5),
+                  ),
+                ),
+                SizedBox(width: 10),
+                Icon(
+                  Icons.arrow_forward,
+                  color: Ucolors.primary.withOpacity(0.5),
+                ),
+              ],
+            ),
+          ),
+        ),
 
         // --- Related Funds Section ---
         Padding(
@@ -273,7 +383,440 @@ class OverviewScreen extends StatelessWidget {
             showActionButton: false,
           ),
         ),
+
         // Add your Related Funds list here
+        SizedBox(
+          height: 140,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: 10,
+            separatorBuilder: (context, index) => SizedBox(width: 0),
+            itemBuilder: (context, index) => SizedBox(
+              width: MediaQuery.of(context).size.width * 0.9,
+
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.15),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    /// 🔹 Top Row (Icon + Title + Menu)
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // / Fund Icon
+                        Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.grey.shade100,
+                          ),
+                          child: ClipOval(
+                            child: Image.asset(UImages.sbi, fit: BoxFit.cover),
+                          ),
+                        ),
+
+                        // CircleAvatar(backgroundImage: AssetImage(UImages.sbi)),
+                        const SizedBox(width: 12),
+
+                        /// Title + Subtitle
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Nippon India Large Cap Fund- Growth Plan- Growth Option',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.3,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        /// Menu
+                        // const Icon(Icons.more_vert, color: Colors.grey),
+                      ],
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    /// 🔹 Bottom Stats
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        StatItem1(
+                          title: '2Y Returns',
+                          amount: '63%',
+                          percentage: '',
+                          amountColor: Colors.green.shade800,
+
+                          percentageColor: Ucolors.success,
+                        ),
+                        StatItem1(
+                          percentage: '',
+                          title: '3Y Returns',
+                          amount: '43%',
+                          amountColor: Colors.green.shade800,
+                          percentageColor: Ucolors.success,
+                        ),
+
+                        StatItem1(
+                          percentage: '',
+                          title: '4Y Returns',
+                          amountColor: Colors.green.shade800,
+
+                          percentageColor: Ucolors.success,
+
+                          amount: '35%',
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 20, 16, 10),
+          child: const USectionHeading(
+            title: 'About this Fund',
+            showActionButton: false,
+          ),
+        ),
+        CustomContainer(
+          topPadding: 15,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ReadMoreText(
+                style: UTextStyles.medium,
+                'Quant Small Cap Fund - Direct Plan - Growth is a Small Cap scheme. The fund is currently managed by Jeetu Vechha. This content is a placeholder — you can replace it with your API description.',
+                trimMode: TrimMode.Line,
+                trimLines: 2,
+                trimCollapsedText: 'Show More',
+                trimExpandedText: 'Show Less',
+                colorClickableText: Ucolors.primary,
+              ),
+              SizedBox(height: 5),
+              Text(
+                'Fund Manager',
+                style: UTextStyles.large.copyWith(fontWeight: FontWeight.w600),
+              ),
+              fundManager('Pratik 1'),
+              DashedLine(color: Colors.grey.shade300),
+              fundManager('Pratik 2'),
+            ],
+          ),
+        ),
+
+        // Padding(
+        //   padding: const EdgeInsets.fromLTRB(16, 20, 16, 10),
+        //   child: const USectionHeading(
+        //     title: 'Investment Details',
+        //     showActionButton: false,
+        //   ),
+        // ),
+
+        ///Investment Details
+        ExpansionTile(
+          shape: Border(),
+          collapsedShape: Border(),
+          // dense: true,
+          title: Text('Invesment Details'),
+          children: [
+            CustomContainer(
+              bottomPadding: 0,
+              child: Column(
+                children: [
+                  investmentDetailSection(
+                    'Fund Size',
+                    '₹ 5,000',
+                    Icons.bar_chart,
+                  ),
+                  Divider(height: 0),
+                  investmentDetailSection(
+                    'Min Investement',
+                    '₹ 5,00',
+                    Icons.circle,
+                  ),
+
+                  Divider(height: 0),
+                  investmentDetailSection(
+                    'Turn over',
+                    '23',
+                    Icons.lightbulb_circle_rounded,
+                  ),
+                  Divider(height: 0),
+                  investmentDetailSection(
+                    'Expense Ratio',
+                    '1.54',
+                    Icons.pie_chart,
+                  ),
+                  Divider(height: 0),
+                  investmentDetailSection(
+                    'Exit Load',
+                    '',
+                    Icons.logout_outlined,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+
+        ///Basic Details
+        ExpansionTile(
+          shape: Border(),
+          collapsedShape: Border(),
+          // dense: true,
+          title: Text('Basic Details'),
+          children: [
+            CustomContainer(
+              bottomPadding: 0,
+              child: Column(
+                children: [
+                  investmentDetailSection(
+                    'Category',
+                    'Large Cap',
+                    Icons.bar_chart,
+                  ),
+                  Divider(height: 0),
+                  investmentDetailSection('KRA', 'KARVY', Icons.circle),
+
+                  Divider(height: 0),
+                  investmentDetailSection(
+                    'Inv. Plan',
+                    'Growth',
+                    Icons.lightbulb_circle_rounded,
+                  ),
+                  Divider(height: 0),
+                  investmentDetailSection(
+                    'Launched IN',
+                    '2007-08-08',
+                    Icons.pie_chart,
+                  ),
+                  Divider(height: 0),
+                  investmentDetailSection(
+                    'Bench Mark',
+                    'BSE 100',
+                    Icons.logout_outlined,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+
+        //AMC Information
+        ExpansionTile(
+          shape: Border(),
+          collapsedShape: Border(),
+          // dense: true,
+          title: Text('AMC Inforamtion'),
+          children: [
+            CustomContainer(
+              bottomPadding: 0,
+              child: Column(
+                children: [
+                  investmentDetailSection(
+                    'AMC',
+                    'Nippon India MF',
+                    Icons.bar_chart,
+                  ),
+                  Divider(height: 0),
+                  investmentDetailSection(
+                    'Email',
+                    'abc.warrgyizmorch@gmail.com',
+                    Icons.circle,
+                  ),
+
+                  Divider(height: 0),
+                  investmentDetailSection(
+                    'Office No',
+                    '1876471871',
+                    Icons.lightbulb_circle_rounded,
+                  ),
+                  Divider(height: 0),
+                  investmentDetailSection(
+                    'Website',
+                    'http://www.google.com',
+                    Icons.pie_chart,
+                  ),
+                  Divider(height: 0),
+                  investmentDetailSection('Address', '', Icons.logout_outlined),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget investmentDetailSection(String title, String value, IconData icon) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+
+      dense: true,
+      isThreeLine: false,
+      title: Row(
+        children: [
+          Icon(icon, color: Ucolors.blue),
+          SizedBox(width: 5),
+          Text(title),
+        ],
+      ),
+      trailing: Text(value),
+    );
+  }
+
+  Widget fundManager(String name) {
+    return ListTile(
+      leading: CircleAvatar(
+        radius: 15,
+        backgroundColor: Ucolors.darkgrey.withOpacity(0.2),
+        child: Icon(Icons.person, color: Ucolors.dark),
+      ),
+      title: Text(
+        name,
+        style: UTextStyles.medium.copyWith(
+          fontWeight: FontWeight.w600,
+          color: Ucolors.dark,
+        ),
+      ),
+      trailing: CompactIcon(
+        icon: Icons.arrow_forward_ios_rounded,
+        iconColor: Ucolors.darkgrey,
+        iconSize: 15,
+
+        onPressed: () {},
+      ),
+    );
+  }
+}
+
+class DashedLine extends StatelessWidget {
+  const DashedLine({
+    super.key,
+    this.color = Colors.blue,
+    this.height = 1,
+    this.dashWidth = 6,
+    this.dashSpace = 4,
+  });
+
+  final Color color;
+  final double height;
+  final double dashWidth;
+  final double dashSpace;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final dashCount = (constraints.maxWidth / (dashWidth + dashSpace))
+            .floor();
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(dashCount, (_) {
+            return SizedBox(
+              width: dashWidth,
+              height: height,
+              child: DecoratedBox(decoration: BoxDecoration(color: color)),
+            );
+          }),
+        );
+      },
+    );
+  }
+}
+
+class FundComparisonItem extends StatelessWidget {
+  const FundComparisonItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // / Fund Icon
+            Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.grey.shade100,
+              ),
+              child: ClipOval(
+                child: Image.asset(UImages.sbi, fit: BoxFit.cover),
+              ),
+            ),
+
+            // CircleAvatar(backgroundImage: AssetImage(UImages.sbi)),
+            const SizedBox(width: 12),
+
+            /// Title + Subtitle
+            Flexible(
+              child: const Text(
+                softWrap: true,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+
+                'Nippon India Large Cap Fund- Growth Plan- Growth Option',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  height: 1.3,
+                ),
+              ),
+            ),
+
+            /// Menu
+            // const Icon(Icons.more_vert, color: Colors.grey),
+          ],
+        ),
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: '3Y Return :',
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w500,
+                  color: Ucolors.darkgrey,
+                ),
+              ),
+              const TextSpan(text: '  '),
+              TextSpan(
+                text: '19.18%',
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w500,
+                  color: Ucolors.success,
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -512,16 +1055,23 @@ class SpeedometerGauge extends StatelessWidget {
 }
 
 class CustomContainer extends StatelessWidget {
-  const CustomContainer({super.key, required this.child});
+  const CustomContainer({
+    super.key,
+    required this.child,
+    this.topPadding = 4,
+    this.bottomPadding = 15,
+  });
 
   final Widget child;
+  final double topPadding;
+  final double bottomPadding;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
       child: Container(
-        padding: EdgeInsets.fromLTRB(15, 4, 15, 15),
+        padding: EdgeInsets.fromLTRB(15, topPadding, 15, bottomPadding),
         decoration: BoxDecoration(
           color: Ucolors.light,
           border: Border.all(color: Ucolors.borderColor),
@@ -602,15 +1152,15 @@ class SliverPageTabs extends SliverPersistentHeaderDelegate {
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToActiveTab());
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: Colors.grey[100],
         borderRadius: BorderRadius.circular(25),
       ),
-      margin: EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      // padding: const EdgeInsets.symmetric(vertical: 8),
       child: ListView.separated(
         controller: _scrollController,
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         itemCount: tabs.length,
         separatorBuilder: (_, __) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
@@ -635,7 +1185,7 @@ class SliverPageTabs extends SliverPersistentHeaderDelegate {
                 child: Text(
                   tabs[index],
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 10,
                     fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                     color: isSelected ? Ucolors.primary : Colors.grey.shade700,
                   ),
@@ -649,10 +1199,10 @@ class SliverPageTabs extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 56;
+  double get maxExtent => 50;
 
   @override
-  double get minExtent => 56;
+  double get minExtent => 50;
 
   @override
   bool shouldRebuild(covariant SliverPageTabs oldDelegate) {

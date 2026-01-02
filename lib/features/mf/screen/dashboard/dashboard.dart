@@ -7,6 +7,7 @@ import 'package:my_sip/common/widget/appbar/custom_appbar.dart';
 import 'package:my_sip/common/widget/appbar/widget/compact_icon.dart';
 import 'package:my_sip/common/widget/text/section_heading.dart';
 import 'package:my_sip/features/mf/controller/dashboard_controller/dashboard_controller.dart';
+import 'package:my_sip/features/mf/screen/fund_details/fund_deatails.dart';
 import 'package:my_sip/utils/constant/colors.dart';
 import 'package:my_sip/utils/constant/images.dart';
 
@@ -120,6 +121,7 @@ class DashboardScreen extends StatelessWidget {
           /// 1️⃣ App Bar
           ///
           SliverAppBar(
+            automaticallyImplyLeading: false,
             floating: false,
             pinned: true,
             flexibleSpace: CustomProfileAppbar(
@@ -133,19 +135,19 @@ class DashboardScreen extends StatelessWidget {
               greetingNameColor: Ucolors.blue,
               action: [
                 CompactIcon(
-                  icon: Icons.notifications,
+                  icon: Iconsax.notification,
                   onPressed: () {},
-                  iconColor: Ucolors.blue,
+                  iconColor: Ucolors.dark,
                 ),
                 CompactIcon(
-                  icon: Icons.shopping_cart,
+                  icon: Iconsax.shopping_cart,
                   onPressed: () {},
-                  iconColor: Ucolors.blue,
+                  iconColor: Ucolors.dark,
                 ),
                 CompactIcon(
-                  icon: Icons.bookmark,
+                  icon: Iconsax.archive_tick,
                   onPressed: () {},
-                  iconColor: Ucolors.blue,
+                  iconColor: Ucolors.dark,
                 ),
               ],
               actionsPadding: EdgeInsets.only(right: 16),
@@ -207,8 +209,8 @@ class DashboardScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              _SummaryItem(title: 'Invested', value: '₹30,000'),
-                              _SummaryItem(
+                              SummaryItem(title: 'Invested', value: '₹30,000'),
+                              SummaryItem(
                                 title: 'Total Returns',
                                 value: '₹2,580',
                               ),
@@ -421,186 +423,209 @@ class TransactionCard extends StatelessWidget {
 }
 
 class PortfolioCard extends StatelessWidget {
-  const PortfolioCard({super.key});
+  const PortfolioCard({
+    super.key,
+    this.subtitle = true,
+    this.iconButton = true,
+  });
+
+  final bool subtitle;
+  final bool iconButton;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.15),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          /// 🔹 Top Row (Icon + Title + Menu)
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // / Fund Icon
-              Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey.shade100,
-                ),
-                child: ClipOval(
-                  child: Image.asset(UImages.sbi, fit: BoxFit.cover),
-                ),
-              ),
+    return GestureDetector(
+      onTap: () => Get.to(() => FundDeatailsScreen()),
 
-              // CircleAvatar(backgroundImage: AssetImage(UImages.sbi)),
-              const SizedBox(width: 12),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.15),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            /// 🔹 Top Row (Icon + Title + Menu)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // / Fund Icon
+                Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey.shade100,
+                  ),
+                  child: ClipOval(
+                    child: Image.asset(UImages.sbi, fit: BoxFit.cover),
+                  ),
+                ),
 
-              /// Title + Subtitle
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Nippon India Large Cap Fund- Growth Plan- Growth Option',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 1.3,
+                // CircleAvatar(backgroundImage: AssetImage(UImages.sbi)),
+                const SizedBox(width: 12),
+
+                /// Title + Subtitle
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Nippon India Large Cap Fund- Growth Plan- Growth Option',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          height: 1.3,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 6),
-                    Row(
-                      children: const [
-                        Text(
-                          '1D Change:',
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
-                        ),
-                        SizedBox(width: 4),
-                        Text(
-                          '-₹24.2',
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
-                        ),
-                        SizedBox(width: 6),
-                        Icon(
-                          Icons.arrow_drop_down,
-                          size: 18,
-                          color: Colors.red,
-                        ),
-                        Text(
-                          '0.44%',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.red,
-                            fontWeight: FontWeight.w600,
-                          ),
+                      if (subtitle) ...[
+                        SizedBox(height: 6),
+                        Row(
+                          children: const [
+                            Text(
+                              '1D Change:',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            SizedBox(width: 4),
+                            Text(
+                              '-₹24.2',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            SizedBox(width: 6),
+                            Icon(
+                              Icons.arrow_drop_down,
+                              size: 18,
+                              color: Colors.red,
+                            ),
+                            Text(
+                              '0.44%',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.red,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
 
-              /// Menu
-              // const Icon(Icons.more_vert, color: Colors.grey),
-              PopupMenuButton<PortfolioMenuAction>(
-                color: Ucolors.light,
-                icon: const Icon(Icons.more_vert, color: Colors.grey),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+                /// Menu
+                // const Icon(Icons.more_vert, color: Colors.grey),
+                iconButton
+                    ? PopupMenuButton<PortfolioMenuAction>(
+                        color: Ucolors.light,
+                        icon: const Icon(Icons.more_vert, color: Colors.grey),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        // elevation: 6,
+                        offset: const Offset(0, 40),
+                        onSelected: (value) {
+                          switch (value) {
+                            case PortfolioMenuAction.topUp:
+                              log('top up');
+                              break;
+
+                            case PortfolioMenuAction.modify:
+                              break;
+                            case PortfolioMenuAction.pause:
+                              break;
+                            case PortfolioMenuAction.cancel:
+                              break;
+                            case PortfolioMenuAction.redemption:
+                              break;
+                          }
+                        },
+                        itemBuilder: (context) => [
+                          buildMenuItem(
+                            icon: Iconsax.card_send,
+                            text: 'Top Up',
+                            value: PortfolioMenuAction.topUp,
+                          ),
+                          buildMenuItem(
+                            icon: Iconsax.edit_2,
+                            text: 'Modify',
+                            value: PortfolioMenuAction.modify,
+                          ),
+                          buildMenuItem(
+                            icon: Iconsax.pause,
+                            text: 'Pause',
+                            value: PortfolioMenuAction.pause,
+                          ),
+                          buildMenuItem(
+                            icon: Iconsax.trash,
+                            text: 'Cancel',
+                            value: PortfolioMenuAction.cancel,
+                          ),
+                          buildMenuItem(
+                            icon: Iconsax.receipt,
+                            text: 'Redemption',
+                            value: PortfolioMenuAction.redemption,
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
+              ],
+            ),
+
+            const SizedBox(height: 16),
+
+            /// 🔹 Bottom Stats
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                StatItem1(title: 'Invested', amount: '₹5K', percentage: ''),
+                StatItem1(
+                  percentage: '',
+                  title: 'Current Value',
+                  amount: '₹5.43K',
                 ),
-                // elevation: 6,
-                offset: const Offset(0, 40),
-                onSelected: (value) {
-                  switch (value) {
-                    case PortfolioMenuAction.topUp:
-                      log('top up');
-                      break;
 
-                    case PortfolioMenuAction.modify:
-                      break;
-                    case PortfolioMenuAction.pause:
-                      break;
-                    case PortfolioMenuAction.cancel:
-                      break;
-                    case PortfolioMenuAction.redemption:
-                      break;
-                  }
-                },
-                itemBuilder: (context) => [
-                  buildMenuItem(
-                    icon: Iconsax.card_send,
-                    text: 'Top Up',
-                    value: PortfolioMenuAction.topUp,
-                  ),
-                  buildMenuItem(
-                    icon: Iconsax.edit_2,
-                    text: 'Modify',
-                    value: PortfolioMenuAction.modify,
-                  ),
-                  buildMenuItem(
-                    icon: Iconsax.pause,
-                    text: 'Pause',
-                    value: PortfolioMenuAction.pause,
-                  ),
-                  buildMenuItem(
-                    icon: Iconsax.trash,
-                    text: 'Cancel',
-                    value: PortfolioMenuAction.cancel,
-                  ),
-                  buildMenuItem(
-                    icon: Iconsax.receipt,
-                    text: 'Redemption',
-                    value: PortfolioMenuAction.redemption,
-                  ),
-                ],
-              ),
-            ],
-          ),
+                StatItem1(
+                  percentage: '8.55 %',
+                  title: 'Gain/Loss',
 
-          const SizedBox(height: 16),
-
-          /// 🔹 Bottom Stats
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              _StatItem1(title: 'Invested', amount: '₹5K', percentage: ''),
-              _StatItem1(
-                percentage: '',
-                title: 'Current Value',
-                amount: '₹5.43K',
-              ),
-
-              _StatItem1(
-                percentage: '8.55 %',
-                title: 'Gain/Loss',
-
-                amount: '₹427.35',
-              ),
-            ],
-          ),
-        ],
+                  amount: '₹427.35',
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class _StatItem1 extends StatelessWidget {
+class StatItem1 extends StatelessWidget {
   final String title;
   final String amount;
   final String percentage;
   final Color percentageColor;
+  final Color amountColor;
 
-  const _StatItem1({
+  const StatItem1({
     required this.title,
     required this.amount,
     required this.percentage,
     this.percentageColor = Colors.green,
+    this.amountColor = Colors.black,
   });
 
   @override
@@ -615,10 +640,10 @@ class _StatItem1 extends StatelessWidget {
             children: [
               TextSpan(
                 text: amount,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
-                  color: Colors.black,
+                  color: amountColor,
                 ),
               ),
               const TextSpan(text: '  '),
@@ -639,11 +664,11 @@ class _StatItem1 extends StatelessWidget {
 }
 
 /// 🔹 Summary Item Widget
-class _SummaryItem extends StatelessWidget {
+class SummaryItem extends StatelessWidget {
   final String title;
   final String value;
 
-  const _SummaryItem({required this.title, required this.value});
+  const SummaryItem({required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {

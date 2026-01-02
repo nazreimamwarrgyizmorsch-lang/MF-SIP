@@ -1,11 +1,13 @@
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:my_sip/common/widget/appbar/custom_appbar.dart';
 import 'package:my_sip/common/widget/appbar/widget/compact_icon.dart';
 import 'package:my_sip/common/widget/text/section_heading.dart';
 import 'package:my_sip/common/widget/text/view_all.dart';
+import 'package:my_sip/features/mf/screen/fund_details/fund_deatails.dart';
 import 'package:my_sip/utils/constant/colors.dart';
 import 'package:my_sip/utils/constant/images.dart';
 import 'package:my_sip/utils/constant/text_style.dart';
@@ -632,16 +634,26 @@ class HomeScreen extends StatelessWidget {
                   // mainAxisExtent: 100,
                 ),
                 delegate: SliverChildListDelegate([
-                  PopularFundCard(name: 'SBI Gold Fund', imgPath: UImages.sbi),
                   PopularFundCard(
+                    onTap: () => Get.to(() => FundDeatailsScreen()),
+
+                    name: 'SBI Gold Fund',
+                    imgPath: UImages.sbi,
+                  ),
+                  PopularFundCard(
+                    onTap: () => Get.to(() => FundDeatailsScreen()),
                     name: 'Parag Parikh Flexi Cap Fund',
                     imgPath: UImages.sbi,
                   ),
                   PopularFundCard(
+                    onTap: () => Get.to(() => FundDeatailsScreen()),
+
                     name: 'Motilal Ostwal Midcap Fund',
                     imgPath: UImages.motilal,
                   ),
                   PopularFundCard(
+                    onTap: () => Get.to(() => FundDeatailsScreen()),
+
                     name: 'Bandhan Small Cap Fund',
                     imgPath: UImages.motilal,
                   ),
@@ -782,78 +794,87 @@ class YoutubeThumbnail extends StatelessWidget {
 }
 
 class PopularFundCard extends StatelessWidget {
-  const PopularFundCard({super.key, required this.imgPath, required this.name});
+  const PopularFundCard({
+    super.key,
+    required this.imgPath,
+    required this.name,
+    this.onTap,
+  });
 
   final String imgPath;
   final String name;
+  final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Ucolors.borderColor),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Logo
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircleAvatar(backgroundImage: AssetImage(imgPath)),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    name,
-                    softWrap: true,
-                    maxLines: 2,
-                    style: UTextStyles.small.copyWith(
-                      color: Ucolors.dark,
-                      fontWeight: FontWeight.w500,
-                      overflow: TextOverflow.ellipsis,
-
-                      // fontSize: 12,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Spacer(),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  '3Y',
-                  style: UTextStyles.caption.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Spacer(),
-                Row(
-                  children: [
-                    Icon(Icons.arrow_drop_up, color: Ucolors.success),
-                    Text(
-                      '+31.06%',
-                      style: UTextStyles.caption.copyWith(
-                        color: Ucolors.success,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Ucolors.borderColor),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 10,
+              offset: const Offset(0, 3),
             ),
           ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Logo
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(backgroundImage: AssetImage(imgPath)),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      name,
+                      softWrap: true,
+                      maxLines: 2,
+                      style: UTextStyles.small.copyWith(
+                        color: Ucolors.dark,
+                        fontWeight: FontWeight.w500,
+                        overflow: TextOverflow.ellipsis,
+
+                        // fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Spacer(),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    '3Y',
+                    style: UTextStyles.caption.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Spacer(),
+                  Row(
+                    children: [
+                      Icon(Icons.arrow_drop_up, color: Ucolors.success),
+                      Text(
+                        '+31.06%',
+                        style: UTextStyles.caption.copyWith(
+                          color: Ucolors.success,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

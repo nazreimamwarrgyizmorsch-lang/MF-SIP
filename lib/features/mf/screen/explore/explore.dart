@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:my_sip/common/widget/appbar/custom_appbar_normal.dart';
 import 'package:my_sip/common/widget/appbar/widget/compact_icon.dart';
+import 'package:my_sip/features/mf/screen/dashboard/dashboard.dart';
+import 'package:my_sip/features/mf/screen/fund_details/fund_deatails.dart';
 import 'package:my_sip/utils/constant/colors.dart';
 import 'package:my_sip/utils/constant/images.dart';
 import 'package:my_sip/utils/constant/text_style.dart';
@@ -16,6 +20,7 @@ class ExploreScreen extends StatelessWidget {
         slivers: [
           //////----------Appbar---------------///
           SliverAppBar(
+            automaticallyImplyLeading: false,
             pinned: true,
 
             // leadingWidth: 20,
@@ -23,6 +28,20 @@ class ExploreScreen extends StatelessWidget {
             flexibleSpace: CustomAppBarNormal(
               title: 'All Mutual Funds',
               backgroundColor: Ucolors.light,
+              actionsPadding: 15,
+              // backIcon: ,
+              action: [
+                CompactIcon(
+                  icon: Iconsax.shopping_cart,
+                  onPressed: () {},
+                  iconColor: Ucolors.dark,
+                ),
+                CompactIcon(
+                  icon: Iconsax.archive_tick,
+                  onPressed: () {},
+                  iconColor: Ucolors.dark,
+                ),
+              ],
             ),
           ),
 
@@ -102,118 +121,174 @@ class MutualFundCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.15),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          /// Top Row
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const CircleAvatar(
-                // radius: 18,
-                maxRadius: 20,
-                backgroundColor: Colors.grey,
-                backgroundImage: AssetImage(UImages.sbi),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Nippon India Large Cap Fund - Growth Plan',
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xff383838),
+    return GestureDetector(
+      onTap: () => Get.to(() => FundDeatailsScreen()),
+
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.15),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            /// Top Row
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const CircleAvatar(
+                  // radius: 18,
+                  maxRadius: 20,
+                  backgroundColor: Colors.grey,
+                  backgroundImage: AssetImage(UImages.sbi),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Nippon India Large Cap Fund - Growth Plan',
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff383838),
+                        ),
                       ),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Risk:',
+                              style: Theme.of(context).textTheme.labelSmall!
+                                  .copyWith(fontWeight: FontWeight.normal),
+                            ),
+                            TextSpan(
+                              text: 'Very High',
+                              style: Theme.of(context).textTheme.labelMedium!
+                                  .copyWith(color: Ucolors.red),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                PopupMenuButton<PortfolioMenuAction>(
+                  color: Ucolors.light,
+                  icon: const Icon(Icons.more_vert, color: Colors.grey),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  // elevation: 6,
+                  offset: const Offset(0, 40),
+                  onSelected: (value) {
+                    switch (value) {
+                      case PortfolioMenuAction.topUp:
+                        // log('top up');
+                        break;
+
+                      case PortfolioMenuAction.modify:
+                        break;
+                      case PortfolioMenuAction.pause:
+                        break;
+                      case PortfolioMenuAction.cancel:
+                        break;
+                      case PortfolioMenuAction.redemption:
+                        break;
+                    }
+                  },
+                  itemBuilder: (context) => [
+                    buildMenuItem(
+                      icon: Iconsax.card_send,
+                      text: 'Add to cart',
+                      value: PortfolioMenuAction.topUp,
                     ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Risk:',
-                            style: Theme.of(context).textTheme.labelSmall!
-                                .copyWith(fontWeight: FontWeight.normal),
-                          ),
-                          TextSpan(
-                            text: 'Very High',
-                            style: Theme.of(context).textTheme.labelMedium!
-                                .copyWith(color: Ucolors.red),
-                          ),
-                        ],
-                      ),
+                    buildMenuItem(
+                      icon: Iconsax.edit_2,
+                      text: 'Buy SIP',
+                      value: PortfolioMenuAction.modify,
+                    ),
+                    buildMenuItem(
+                      icon: Iconsax.pause,
+                      text: 'Buy Lumpsum',
+                      value: PortfolioMenuAction.pause,
+                    ),
+                    buildMenuItem(
+                      icon: Iconsax.trash,
+                      text: 'Add to watchlist',
+                      value: PortfolioMenuAction.cancel,
+                    ),
+                    buildMenuItem(
+                      icon: Iconsax.receipt,
+                      text: 'Fund Details',
+                      value: PortfolioMenuAction.redemption,
                     ),
                   ],
                 ),
-              ),
-              const Icon(Icons.more_vert),
-            ],
-          ),
-
-          // const SizedBox(height: 8),
-
-          // RichText(
-          //   text: TextSpan(
-          //     children: [
-          //       TextSpan(
-          //         text: 'Risk:',
-          //         style: Theme.of(context).textTheme.labelSmall!.copyWith(),
-          //       ),
-          //       TextSpan(
-          //         text: 'Very High',
-          //         style: Theme.of(
-          //           context,
-          //         ).textTheme.labelMedium!.copyWith(color: Ucolors.red),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-
-          /// Risk
-          // const Text(
-          //   'Risk: Very High',
-          //   style: TextStyle(fontSize: 13, color: Colors.red),
-          // ),
-          const SizedBox(height: 5),
-          // const Divider(height: 0),
-          Text(
-            maxLines: 1,
-            'Trailing Return -------------------------------------------------------------------------------------------------------',
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: Ucolors.borderside,
-              fontSize: 10,
-              height: 0,
+                // const Icon(Icons.more_vert),
+              ],
             ),
-          ),
 
-          const SizedBox(height: 5),
+            // const SizedBox(height: 8),
 
-          /// Returns Row
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [
-              _ReturnItem(title: '1W', value: '-0.15%', isNegative: true),
-              _ReturnItem(title: '1Y', value: '5.20%'),
-              _ReturnItem(title: '3Y', value: '18.42%'),
-              _ReturnItem(title: '5Y', value: '20.89%'),
-            ],
-          ),
-        ],
+            // RichText(
+            //   text: TextSpan(
+            //     children: [
+            //       TextSpan(
+            //         text: 'Risk:',
+            //         style: Theme.of(context).textTheme.labelSmall!.copyWith(),
+            //       ),
+            //       TextSpan(
+            //         text: 'Very High',
+            //         style: Theme.of(
+            //           context,
+            //         ).textTheme.labelMedium!.copyWith(color: Ucolors.red),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+
+            /// Risk
+            // const Text(
+            //   'Risk: Very High',
+            //   style: TextStyle(fontSize: 13, color: Colors.red),
+            // ),
+            const SizedBox(height: 5),
+            // const Divider(height: 0),
+            Text(
+              maxLines: 1,
+              'Trailing Return -------------------------------------------------------------------------------------------------------',
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: Ucolors.borderside,
+                fontSize: 10,
+                height: 0,
+              ),
+            ),
+
+            const SizedBox(height: 5),
+
+            /// Returns Row
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                _ReturnItem(title: '1W', value: '-0.15%', isNegative: true),
+                _ReturnItem(title: '1Y', value: '5.20%'),
+                _ReturnItem(title: '3Y', value: '18.42%'),
+                _ReturnItem(title: '5Y', value: '20.89%'),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

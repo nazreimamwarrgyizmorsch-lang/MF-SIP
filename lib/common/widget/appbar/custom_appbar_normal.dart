@@ -26,6 +26,7 @@ class CustomAppBarNormal extends StatelessWidget
       backgroundColor: backgroundColor ?? Colors.grey.shade50,
       // automaticallyImplyLeading: true,
       actionsPadding: EdgeInsets.only(right: actionsPadding ?? 0),
+      // automaticallyImplyLeading: true,
 
       // leadingWidth: ,
       leading: backIcon
